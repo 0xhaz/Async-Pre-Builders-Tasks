@@ -32,7 +32,7 @@ const wallet = JSON.parse(
       payer: signer,
       updateAuthority: keypair.publicKey,
       data: {
-        name: "Haleem Turbin3 Token",
+        name: "Haz Turbin3 Token",
         symbol: "HTT",
         uri: "",
         sellerFeeBasisPoints: 0,
