@@ -11,7 +11,7 @@ const connection = new Connection("https://api.devnet.solana.com", "confirmed");
 
 const token_decimals = 1_000_000n;
 
-const mint = new PublicKey("8xSWC3FN3HJV3d9V84iJLpc7mKpmUKZURAaBHdBxNvu5");
+const mint = new PublicKey("8XfMLhdBK9M8CM7mwNKBRMX3TvhC1RFNYnHsGvWLfyKj");
 
 (async () => {
   try {

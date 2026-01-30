@@ -19,7 +19,7 @@ const connection = new Connection("https://api.devnet.solana.com", commitment);
       null,
       6,
     );
-    console.log("mint sucessfully created");
+    console.log("mint sucessfully created", mint.toBase58());
   } catch (err) {
     console.error("something went wrong", err);
   }
