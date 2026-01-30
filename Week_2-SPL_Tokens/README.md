@@ -69,3 +69,20 @@ Example:
   - Aim to request only what's needed
   - No automatic higher fee required
   - Priority fees possible
+
+## PDA
+
+- Made up of seeds and a bump
+- Deterministic if seeds are fixed (e.g Associated Token Accounts)
+- Can't collide with PDAs or Account created by other programs
+- Can be used as hashmap (key / value)
+- PDA account pubkeys resembles accounts but no private key
+- Can authorize / sign on program's behalf
+
+## IDL
+
+- Interface Design Language
+- Many on-chain programs have an IDL
+- Makes interacting with on-chain programs much easier
+- Public IDLs can be uploded to the chain for easy etc.
+- Written in JSON
