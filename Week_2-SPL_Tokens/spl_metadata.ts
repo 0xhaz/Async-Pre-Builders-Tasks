@@ -45,7 +45,7 @@ const wallet = JSON.parse(
     }).sendAndConfirm(umi);
 
     console.log("Metadata created successfully!");
-    console.log("Name: Haleem Turbin3 Token");
+    console.log("Name: Haz Turbin3 Token");
     console.log("Symbol: HTT");
   } catch (err) {
     console.error("Error:", err);
