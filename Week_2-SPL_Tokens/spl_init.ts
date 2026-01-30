@@ -2,7 +2,7 @@ import web3 from "@solana/web3.js";
 import { createMint } from "@solana/spl-token";
 import fs from "fs";
 const wallet = JSON.parse(
-  fs.readFileSync("/root/.config/solana/id.json", "utf8"),
+  fs.readFileSync("/Users/haz/.config/solana/id.json", "utf8"),
 );
 
 const { Keypair, Connection } = web3;
@@ -21,6 +21,6 @@ const connection = new Connection("https://api.devnet.solana.com", commitment);
     );
     console.log("mint sucessfully created");
   } catch (err) {
-    console.error("something went wrong");
+    console.error("something went wrong", err);
   }
 })();

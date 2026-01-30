@@ -3,7 +3,7 @@ import { mintTo, getOrCreateAssociatedTokenAccount } from "@solana/spl-token";
 import fs from "fs";
 
 const wallet = JSON.parse(
-  fs.readFileSync("/root/.config/solana/id.json", "utf8"),
+  fs.readFileSync("/Users/haz/.config/solana/id.json", "utf8"),
 );
 const { Keypair, Connection, PublicKey } = web3;
 const keypair = Keypair.fromSecretKey(new Uint8Array(wallet));

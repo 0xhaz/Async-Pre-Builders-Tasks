@@ -9,7 +9,7 @@ import {
 import fs from "fs";
 
 const wallet = JSON.parse(
-  fs.readFileSync("/root/.config/solana/id.json", "utf8"),
+  fs.readFileSync("/Users/haz/.config/solana/id.json", "utf8"),
 );
 
 (async () => {
