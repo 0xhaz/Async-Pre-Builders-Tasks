@@ -23,7 +23,7 @@ const wallet = JSON.parse(
     umi.use(signerIdentity(signer));
 
     const mintAddress = publicKey(
-      "HXrke2GT4Xh82kVmwrgCg9APWUdwHKrPq9v13F3Niwbf",
+      "8KP3qLzJUEtzhxyapGK7MvwQWTtdPHERDQLVRVjqf6hr",
     );
 
     await createMetadataAccountV3(umi, {
