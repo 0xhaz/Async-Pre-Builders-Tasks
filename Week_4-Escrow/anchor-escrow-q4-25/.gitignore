@@ -1,0 +1,8 @@
+.anchor
+.DS_Store
+target
+**/*.rs.bk
+Week_4-Escrow/node_modules
+test-ledger
+.yarn
+/programs/anchor-escrow-q4-25/node_modules
