@@ -1,11 +1,13 @@
 # Anchor Escrow Q4-25
 
 Simple Solana escrow program built with Anchor, with three instructions:
+
 - `make`
 - `refund`
 - `take`
 
 Program ID (localnet):
+
 - `Hg3LrWzULvyfQtGHcGCRStVm8B7R7aVT9kdYH4h3rHvz`
 
 ## Task Requirements
@@ -14,6 +16,7 @@ Program ID (localnet):
 2. Write tests for each instruction.
 
 Status:
+
 - All three instructions are implemented in Rust.
 - Tests cover all three paths and pass.
 
@@ -31,6 +34,7 @@ Status:
 ## Escrow State
 
 `Escrow` account fields:
+
 - `seed: u64`
 - `maker: Pubkey`
 - `mint_a: Pubkey`
@@ -39,25 +43,30 @@ Status:
 - `bump: u8`
 
 PDA derivation:
+
 - seeds: `["escrow", maker, seed_le_bytes]`
 
 Vault:
+
 - ATA for `mint_a`
 - authority = escrow PDA
 
 ## Instruction Behavior
 
 ### `make(seed, deposit, receive)`
+
 - Creates escrow PDA and vault ATA.
 - Stores trade terms in escrow account.
 - Transfers `deposit` amount of `mint_a` from maker ATA to vault.
 
 ### `refund()`
+
 - Maker-only cancel path.
 - Transfers all `mint_a` from vault back to maker ATA.
 - Closes vault and escrow account.
 
 ### `take()`
+
 - Taker accepts trade.
 - Transfers `escrow.receive` amount of `mint_b` from taker ATA to maker ATA.
 - Transfers full vault `mint_a` balance to taker ATA.
@@ -86,6 +95,7 @@ anchor test
 ```
 
 Expected test output includes:
+
 - `Makes the escrow`
 - `Makes and refunds the escrow`
 - `Makes and takes the escrow`
@@ -99,3 +109,5 @@ Expected test output includes:
 ```bash
 cargo update -p blake3 --precise 1.5.5
 ```
+
+![test_result](../test_result.png)
