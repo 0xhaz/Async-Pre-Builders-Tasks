@@ -256,4 +256,76 @@ pub fn process_cancel_governance_proposal(
     _program_id: &Pubkey,
     accounts: &[AccountInfo],
     proposal_id: u64,
-) -> ProgramResult {}
+) -> ProgramResult {
+    let account_info_iter = &mut accounts.iter();
+    let vault_account = next_account_info(account_info_iter)?;
+    let canceller = next_account_info(account_info_iter)?;
+
+    if !canceller.is_signer {
+        return Err(ProgramError::MissingRequiredSignature);
+    }
+
+    let vault_data = vault_account.data.borrow();
+    let mut vault = Vault::try_from_slice(&vault_data)?;
+
+    let proposal = vault.governance_proposals.iter_mut().find(|p| p.id == proposal_id).ok_or(ProgramError::InvalidAccountData)?;
+
+    if proposal.proposer != *canceller.key && vault.emergency_admin != *canceller.key {
+        return Err(ProgramError::InvalidAccountData);
+    }
+
+    proposal.cancelled = true;
+
+    drop(vault_data);
+    vault.serialize(&mut &mut vault_account.data.borrow_mut()[..])?;
+
+    msg!("Governance proposal {} cancelled", proposal_id);
+    Ok(())
+}
+
+pub fn process_update_governance_config(
+    _program_id: &Pubkey,
+    accounts: &[AccountInfo],
+    quorum_threshold: u16,
+    proposal_threshold: u64,
+    voting_period: i64,
+    timelock_delay: i64,
+    execution_threshold: u16,
+) -> ProgramResult {
+    let account_info_iter = &mut accounts.iter();
+    let vault_account = next_account_info(account_info_iter)?;
+    let authority = next_account_info(account_info_iter)?;
+
+    if !authority.is_signer {
+        return Err(ProgramError::MissingRequiredSignature);
+    }
+
+    let vault_data = vault_account.data.borrow();
+    let mut vault = Vault::try_from_slice(&vault_data)?;
+
+      let is_authorized = if let Some(multi_sig) = &vault.multi_sig {
+        multi_sig.authorities.contains(authority.key)
+    } else {
+        vault.authority == *authority.key
+    };
+
+    if !is_authorized {
+        return Err(ProgramError::InvalidAccountData);
+    }
+
+    if let Some(governance_config) = &mut vault.governance_config {
+        governance_config.quorum_threshold = quorum_threshold;
+        governance_config.proposal_threshold = proposal_threshold;
+        governance_config.voting_period = voting_period;
+        governance_config.timelock_delay = timelock_delay;
+        governance_config.execution_threshold = execution_threshold;
+    } else {
+        return Err(ProgramError::InvalidAccountData);
+    }
+
+    drop(vault_data);
+    vault.serialize(&mut &mut vault_account.data.borrow_mut()[..])?;
+
+    msg!("Governance config updated successfully");
+    Ok(())
+}
